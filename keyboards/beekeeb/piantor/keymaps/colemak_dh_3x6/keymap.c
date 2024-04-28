@@ -19,7 +19,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 
 };
+
 #endif // defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+
+const rgblight_segment_t PROGMEM my_layer_0[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_MAGENTA}
+);
+
+const rgblight_segment_t PROGMEM my_layer_1[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_TEAL}
+);
+
+const rgblight_segment_t PROGMEM my_layer_2[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_GREEN}
+);
+
+const rgblight_segment_t PROGMEM my_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 2, HSV_GOLD}
+);
+
+const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    my_layer_0,
+    my_layer_1,
+    my_layer_2,
+    my_layer_3
+);
+
+void keyboard_post_init_user(void) {
+    rgblight_layers = my_rgb_layers;
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(0, layer_state_cmp(state, 0));
+    return state;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+    rgblight_set_layer_state(2, layer_state_cmp(state, 2));
+    rgblight_set_layer_state(3, layer_state_cmp(state, 3));
+    return state;
+}
 
 
 
